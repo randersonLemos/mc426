@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  chatbot:
+    build: .
+    container_name: chatbot
+    restart: unless-stopped
+    ports:
+      - "5100:5100"
+    volumes:
+      - ./server.js:/app/server.js
+      - chatbotdata:/app/tokens
+
+volumes:
+  chatbotdata:
