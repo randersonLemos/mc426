@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/salve-galera', function (Request $request) {
+    return response()->json([
+        'message' => 'Salve Galera!!!',
+    ]);
+});
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
