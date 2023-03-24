@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import './components/HelloWorld'
-import HelloWorld from './components/HelloWorld';
+import SalveGalera from './components/SalveGalera';
 
 
 function App() {
@@ -21,7 +20,7 @@ function App() {
           Learn React
         </a>
       </header> */}
-      <HelloWorld></HelloWorld>
+      <SalveGalera></SalveGalera>
     </div>
   );
 }
