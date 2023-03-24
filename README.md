@@ -18,12 +18,14 @@ docker compose up
 
 ## NodeJs
 Para rodar esse projeto vá dentro da pasta *nodejs* e dispare o comando
+
 ˋˋˋ
 docker compose up
 ˋˋˋ
 
 ## Chatbot
 Para rodar esse projeto vá dentro da pasta *chatbot* e dispare o comando
+
 ˋˋˋ
 docker compose up
 ˋˋˋ
