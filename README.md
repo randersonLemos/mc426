@@ -11,10 +11,10 @@ O projeto está organizdo em três subprojetos (pastas) que a partir de agora ta
 ## Laravel
 Para rodar esse projeto vá dentro da pasta *laraval* e dispare os comandos
 
-ˋˋˋ
+```
 cp .env.example .env
 docker compose up
-ˋˋˋ
+```
 
 ## NodeJs
 Para rodar esse projeto vá dentro da pasta *nodejs* e dispare o comando
