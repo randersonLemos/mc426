@@ -10,10 +10,22 @@ O projeto está organizdo em três subprojetos (pastas) que a partir de agora ta
 
 ## Laravel
 Para rodar esse projeto vá dentro da pasta *laraval* e dispare os comandos
-
 ```
-cp .env.example .env
-docker compose up
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs    
+``` 
+```
+docker compose up -d
+```
+```
+docker exec backend-laravel2-laravel.ipesca-1 php artisan migrate:fresh --seed
+```
+```
+docker exec backend-laravel2-laravel.ipesca-1 php artisan key:generate
 ```
 
 ## NodeJs
