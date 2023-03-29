@@ -22,10 +22,10 @@ docker run --rm \
 docker compose up -d
 ```
 ```
-docker exec backend-laravel2-laravel.ipesca-1 php artisan migrate:fresh --seed
+docker exec laravel-laravel.mc426-1 php artisan migrate:fresh --seed
 ```
 ```
-docker exec backend-laravel2-laravel.ipesca-1 php artisan key:generate
+docker exec laravel-laravel.mc426-1 php artisan key:generate
 ```
 
 ## NodeJs
