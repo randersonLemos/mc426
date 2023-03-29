@@ -11,6 +11,9 @@ O projeto está organizdo em três subprojetos (pastas) que a partir de agora ta
 ## Laravel
 Para rodar esse projeto vá dentro da pasta *laraval* e dispare os comandos
 ```
+cp .env.example .env
+``` 
+```
 docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
