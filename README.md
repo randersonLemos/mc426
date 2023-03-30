@@ -30,7 +30,9 @@ docker exec laravelphp-laravel.mc426-1 php artisan migrate:fresh --seed
 ```
 docker exec laravelphp-laravel.mc426-1 php artisan key:generate
 ```
-
+```
+docker compose up
+```
 ## NodeJs
 Para rodar esse projeto vá dentro da pasta *nodejs* e dispare o comando
 
