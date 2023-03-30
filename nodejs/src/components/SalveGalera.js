@@ -8,7 +8,7 @@ function SalveGalera () {
 
     function listener () {
         // Make a request for a user with a given ID
-        axios.get('http://localhost/api/salve-galera')
+        axios.get('http://localhost:80/salve-galera')
         .then(function (response) {
             // handle success
             console.log(response);
