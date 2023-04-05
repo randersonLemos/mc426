@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserMessageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,3 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/salve-galera', function () {
     return 'Hello World';
 });
+
+Route::get ('/user-message', [UserMessageController::class, 'index']);
+Route::post('/user-message', [UserMessageController::class, 'store']);
