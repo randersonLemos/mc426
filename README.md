@@ -13,7 +13,7 @@ npm i
 Finalmente, execute
 
 ```
-npm start
+npm run dev
 ```
 
 Entre no seu navegador preferido e entre no endereço
