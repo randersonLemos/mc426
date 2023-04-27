@@ -18,3 +18,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MC426_6AC70 }}'
           channelId: live
           projectId: mc426-6ac70
+          entrypoint: frontend/
