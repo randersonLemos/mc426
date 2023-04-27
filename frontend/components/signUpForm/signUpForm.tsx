@@ -80,7 +80,7 @@ export default function SignUpForm() {
   const [values, setValues] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [birth, setBirth] = useState()
+  const [birth, setBirth] = useState(dayjs())
   const [nameError, setNameError] = useState(false)
   const [emailError, setEmailError] = useState(false)
   const [loading, setLoading] = useState(false)
