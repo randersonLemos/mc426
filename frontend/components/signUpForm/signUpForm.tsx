@@ -47,7 +47,7 @@ interface SignUpProps {
   name: string
   email: string
   phone: string
-  birth?: Dayjs
+  birth: Dayjs
   appVerifier: ApplicationVerifier
 }
 
@@ -64,7 +64,7 @@ const signUp = async (args: SignUpProps) => {
             sessionStorage.setItem('name', args.name)
             sessionStorage.setItem('email', args.email)
             sessionStorage.setItem('phone', args.phone)
-            sessionStorage.setItem('birth', args?.birth.format('DD/MM/YYYY'))
+            sessionStorage.setItem('birth', args.birth.format('DD/MM/YYYY'))
             console.log('codigo enviado')
             return confirmationResult
           })
@@ -95,7 +95,7 @@ export default function SignUpForm() {
     setLoading(true)
     if (name.length <= 3) setNameError(true)
     if (!email.includes('@')) setEmailError(true)
-    if (!birth.isValid() || !email.includes('@') || name.length <= 3) {
+    if (!birth?.isValid() || !email.includes('@') || name.length <= 3) {
       setLoading(false)
       return
     }
