@@ -8,6 +8,8 @@ import { FirebaseWindow } from '@/utils/customWindow'
 import styles from './signUpStyles.module.css'
 import { app } from '@/pages/_app'
 import dayjs, { Dayjs } from 'dayjs'
+import { PickerChangeHandler } from '@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue'
+import { DateValidationError } from '@mui/x-date-pickers'
 
 declare let window: FirebaseWindow
 
@@ -45,11 +47,12 @@ interface SignUpProps {
   name: string
   email: string
   phone: string
-  birth: Dayjs
+  birth?: Dayjs
   appVerifier: ApplicationVerifier
 }
 
 const signUp = async (args: SignUpProps) => {
+  console.log(args.birth)
   if (args.name.length > 3) {
     if (args.email.includes('@')) {
       if (args.phone.length === 14) {
@@ -61,7 +64,7 @@ const signUp = async (args: SignUpProps) => {
             sessionStorage.setItem('name', args.name)
             sessionStorage.setItem('email', args.email)
             sessionStorage.setItem('phone', args.phone)
-            sessionStorage.setItem('birth', args.birth.format('DD/MM/YYYY'))
+            sessionStorage.setItem('birth', args?.birth.format('DD/MM/YYYY'))
             console.log('codigo enviado')
             return confirmationResult
           })
@@ -80,7 +83,7 @@ export default function SignUpForm() {
   const [values, setValues] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [birth, setBirth] = useState(dayjs())
+  const [birth, setBirth] = useState<Dayjs | null>(null)
   const [nameError, setNameError] = useState(false)
   const [emailError, setEmailError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -104,7 +107,7 @@ export default function SignUpForm() {
       setLoading(false)
     }
     setLoading(false)
-  }
+  } 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues(event.target.value)
@@ -176,7 +179,7 @@ export default function SignUpForm() {
         className={styles.input}
         format="DD/MM/YYYY"
         value={birth}
-        onChange={(value: any) => setBirth(value)}
+        onChange={(newValue) => setBirth(newValue)}
         slotProps={{ textField: { variant: 'filled', label: 'Data de Nascimento' } }}
       />
       <Button className={styles.button} color="primary" variant="contained" type="submit" onSubmit={handleSignUp}>
