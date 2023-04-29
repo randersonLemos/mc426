@@ -21,7 +21,7 @@ export default function Home({ setActiveTheme }: HomeProps) {
     async function sendRequest() {
       const options = {
         method: 'POST',
-        url: 'http://mc426chatbot.ddns.net/api/chatbot/sendtext',
+        url: 'https://mc426chatbot.ddns.net/api/chatbot/sendtext',
         headers: { 'Content-Type': 'application/json' },
         data: { number: '5519988352366', message: 'Hello World (Eu sou o chatbot)' }
       };
