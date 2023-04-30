@@ -8,8 +8,6 @@ import { FirebaseWindow } from '@/utils/customWindow'
 import styles from './signUpStyles.module.css'
 import { app } from '@/pages/_app'
 import dayjs, { Dayjs } from 'dayjs'
-import { PickerChangeHandler } from '@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue'
-import { DateValidationError } from '@mui/x-date-pickers'
 
 declare let window: FirebaseWindow
 

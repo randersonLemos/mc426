@@ -7,8 +7,14 @@ import { ThemeProvider } from '@mui/material'
 import { theme } from '@/styles/muiTheme'
 import { StyledEngineProvider } from '@mui/material/styles'
 import { ptBR } from '@mui/x-date-pickers/locales'
+import { Roboto } from 'next/font/google'
+
 import '@/styles/globals.css'
 
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '700', '900'],
+})
 const brazilLocale = ptBR.components.MuiLocalizationProvider.defaultProps.localeText
 
 // Import the functions you need from the SDKs you need
@@ -48,7 +54,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br" localeText={brazilLocale}>
       <ThemeProvider theme={theme(activeTheme)}>
         <StyledEngineProvider injectFirst>
-          <Component {...pageProps} setActiveTheme={setActiveTheme} />
+          <main className={roboto.className} style={{height: '100%'}}>
+            <Component {...pageProps} setActiveTheme={setActiveTheme} />
+          </main>
         </StyledEngineProvider>
       </ThemeProvider>
     </LocalizationProvider>
