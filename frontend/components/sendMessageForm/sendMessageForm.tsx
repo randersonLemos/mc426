@@ -22,6 +22,7 @@ export default function SendMessageForm() {
         variant="filled"
         multiline
         minRows={5}
+        data-cy="message"
         value={message}
         required
         onChange={(ev) => setMessage(ev.target.value)}
@@ -30,6 +31,7 @@ export default function SendMessageForm() {
         variant="contained"
         color="primary"
         type="submit"
+        data-cy="submit"
         onSubmit={handleSendMessage}
         style={{ marginTop: '30px' }}
       >
