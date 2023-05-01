@@ -19,7 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: cd frontend/ && cypress-io/github-action@v5
+      - uses: cypress-io/github-action@v5
+        with:
+          working-directory: frontend
       - run: cd frontend/ &&  npm i -g firebase-tools@latest
       - run: cd frontend/ && npm ci && npm run build
       - run: cd frontend/ && firebase experiments:enable webframeworks
