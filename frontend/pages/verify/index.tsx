@@ -10,11 +10,7 @@ import styles from '@/styles/verify.module.css'
 
 declare let window: FirebaseWindow
 
-type VerifyProps = {
-  setActiveTheme: React.Dispatch<React.SetStateAction<'light' | 'dark'>>
-}
-
-export default function Verify({ setActiveTheme }: VerifyProps) {
+export default function Verify() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -66,7 +62,7 @@ export default function Verify({ setActiveTheme }: VerifyProps) {
 
   return (
     <main className={styles.container} style={{ backgroundColor: theme.palette.background.default }}>
-      <Header setActiveTheme={setActiveTheme} />
+      <Header />
       <Typography className={styles.title} variant="h3" color={theme.palette.text.secondary}>
         Digite o codigo que enviamos para seu telefone
       </Typography>

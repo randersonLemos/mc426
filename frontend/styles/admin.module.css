@@ -8,9 +8,19 @@
   align-items: center;
 }
 
+.button {
+  display: flex;
+  margin-top: 20px;
+  width: 400px;
+}
+
 @media screen and (max-width: 600px) {
   .container {
     padding: 20px;
     padding-top: 70px;
+  }
+
+  .button {
+    width: 100%;
   }
 }
