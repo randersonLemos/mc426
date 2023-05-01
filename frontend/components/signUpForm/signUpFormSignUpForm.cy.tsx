@@ -9,10 +9,6 @@ describe('<SignUpForm />', () => {
   it('renders', () => {
     const push = cy.stub()
     cy.stub(NextRouter, 'useRouter').returns({ pathname, push })
-    // see: https://on.cypress.io/mounting-react
-
-    // <MockRouter asPath="/">
-    // </MockRouter>
     cy.mount(
       <Localization>
         <SignUpForm />
