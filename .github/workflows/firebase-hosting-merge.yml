@@ -20,7 +20,7 @@ jobs:
       steps:
         - uses: cypress-io/github-action@v5
           with:
-            working-directory: ./frontend/
+            working-directory: ../frontend
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
