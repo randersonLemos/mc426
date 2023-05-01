@@ -1,6 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import { useTheme } from '@mui/material'
+import SignUpForm from '@/components/signUpForm/signUpForm'
 import Header from '@/components/header/header'
 import styles from '@/styles/Home.module.css'
 
@@ -21,6 +22,7 @@ export default function Home({ setActiveTheme }: HomeProps) {
       </Head>
       <main className={styles.container} style={{ backgroundColor: theme.palette.background.default }}>
         <Header setActiveTheme={setActiveTheme} />
+        <SignUpForm />
       </main>
     </>
   )
