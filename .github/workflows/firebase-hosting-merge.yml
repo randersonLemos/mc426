@@ -22,6 +22,7 @@ jobs:
       - uses: cypress-io/github-action@v5
         with:
           working-directory: frontend
+          component: true
       - run: cd frontend/ &&  npm i -g firebase-tools@latest
       - run: cd frontend/ && npm ci && npm run build
       - run: cd frontend/ && firebase experiments:enable webframeworks
