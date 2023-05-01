@@ -19,6 +19,8 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: cypress-io/github-action@v5
+          with:
+            path: frontend/
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
