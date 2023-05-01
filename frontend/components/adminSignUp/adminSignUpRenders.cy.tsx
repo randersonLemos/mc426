@@ -1,5 +1,5 @@
 import React from 'react'
-import SignUpForm from './adminSignUp'
+import AdminSignUp from './adminSignUp'
 import Localization from '@/cypress/utils/localization'
 import * as NextRouter from 'next/router'
 
@@ -10,12 +10,9 @@ describe('<SignUpForm />', () => {
     const push = cy.stub()
     cy.stub(NextRouter, 'useRouter').returns({ pathname, push })
     // see: https://on.cypress.io/mounting-react
-
-    // <MockRouter asPath="/">
-    // </MockRouter>
     cy.mount(
       <Localization>
-        <SignUpForm />
+        <AdminSignUp />
       </Localization>
     )
   })

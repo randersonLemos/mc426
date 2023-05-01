@@ -1,5 +1,5 @@
 import React from 'react'
-import SignUpForm from './adminSignUp'
+import SignUpForm from './signUpForm'
 import Localization from '@/cypress/utils/localization'
 import * as NextRouter from 'next/router'
 
