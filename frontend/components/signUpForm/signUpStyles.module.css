@@ -1,31 +1,31 @@
 .form {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-}
-.label {
-  margin-top: 20px;
-  font-size: 2rem;
-  transition: all 500ms;
-}
-
-.input {
-  margin-top: 5px;
-}
-
-.button {
-  margin-top: 30px;
-}
-
-@media screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+  }
   .label {
-    font-size: 1.5rem;
+    margin-top: 20px;
+    font-size: 2rem;
+    transition: all 500ms;
   }
-  .container {
-    padding: 10px;
-    padding-top: 70px;
+  
+  .input {
+    margin-top: 5px;
   }
-  .form {
-    width: 100%;
+  
+  .button {
+    margin-top: 30px;
   }
-}
+  
+  @media screen and (max-width: 600px) {
+    .label {
+      font-size: 1.5rem;
+    }
+    .container {
+      padding: 10px;
+      padding-top: 70px;
+    }
+    .form {
+      width: 100%;
+    }
+  }

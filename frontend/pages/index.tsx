@@ -1,8 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
 import { useTheme } from '@mui/material'
-import Header from '@/components/header/header'
 import SignUpForm from '@/components/signUpForm/signUpForm'
+import Header from '@/components/header/header'
 import styles from '@/styles/Home.module.css'
 
 type HomeProps = {
