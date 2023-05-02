@@ -18,7 +18,7 @@ export default function Home() {
       </Head>
       <main className={styles.container} style={{ backgroundColor: theme.palette.background.default }}>
         <Header />
-        <Typography variant="h2" color={theme.palette.text.secondary}>Cadastre-se agora para receber alertas!</Typography>
+        <Typography variant="h2" color={theme.palette.text.secondary} style={{marginTop: '30px'}}>Cadastre-se agora para receber alertas!</Typography>
         <SignUpForm />
       </main>
     </>

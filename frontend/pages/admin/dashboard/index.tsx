@@ -7,8 +7,8 @@ import { app, db } from '../../_app'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { User, getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { useRouter } from 'next/router'
-import styles from '@/styles/adminDashboard.module.css'
 import dayjs from 'dayjs'
+import styles from '@/styles/adminDashboard.module.css'
 
 const auth = getAuth(app)
 
@@ -17,7 +17,7 @@ interface AlertaUser {
   email: string
   phone: string
   birthDay: Timestamp | string
-  userInfo: string
+  uid: string
 }
 
 const columns: GridColDef[] = [
@@ -38,7 +38,7 @@ const columns: GridColDef[] = [
     sortable: false,
     width: 150,
     valueFormatter: (params) => {
-      return dayjs.unix(params.value).format("DD/MM/YYYY")
+      return dayjs.unix(params.value).add(1, 'days').format("DD/MM/YYYY")
     }
   },
   {
@@ -75,7 +75,7 @@ export default function Admin() {
       const querySnapshot = await getDocs(collection(db, 'users'))
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, ' => ', doc.data())
+        // console.log(doc.id, ' => ', doc.data())
         users.push(doc.data() as AlertaUser)
       })
       setUsersSigned(users)
@@ -101,7 +101,7 @@ export default function Admin() {
         {usersSigned ? (
           <div className={styles.tableContainer}>
             <Typography variant="h3" color={theme.palette.text.secondary}>Usuários cadastrados</Typography>
-            <DataGrid rows={usersSigned} columns={columns} getRowId={(row: AlertaUser) => row.userInfo} />
+            <DataGrid rows={usersSigned} columns={columns} getRowId={(row: AlertaUser) => row.uid} />
           </div>
         ) : null}
       </div>
