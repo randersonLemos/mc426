@@ -38,8 +38,8 @@ const columns: GridColDef[] = [
     sortable: false,
     width: 150,
     valueFormatter: (params) => {
-      return dayjs.unix(params.value).add(1, 'days').format("DD/MM/YYYY")
-    }
+      return dayjs.unix(params.value).add(1, 'days').format('DD/MM/YYYY')
+    },
   },
   {
     field: 'phone',
@@ -50,14 +50,15 @@ const columns: GridColDef[] = [
       const phone = params.value as string
       const phoneFormatted = phone.replace('+55', '')
       return phoneFormatted
-    }
+    },
   },
 ]
 
 export default function Admin() {
-  const theme = useTheme()
   const [usersSigned, setUsersSigned] = useState<AlertaUser[]>()
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 5 })
   const [user, setUser] = useState<User | null>(null)
+  const theme = useTheme()
   const router = useRouter()
 
   useEffect(() => {
@@ -100,8 +101,17 @@ export default function Admin() {
         <SendMessageForm />
         {usersSigned ? (
           <div className={styles.tableContainer}>
-            <Typography variant="h3" color={theme.palette.text.secondary}>Usuários cadastrados</Typography>
-            <DataGrid rows={usersSigned} columns={columns} getRowId={(row: AlertaUser) => row.uid} />
+            <Typography variant="h3" color={theme.palette.text.secondary}>
+              Usuários cadastrados
+            </Typography>
+            <DataGrid
+              rows={usersSigned}
+              columns={columns}
+              paginationModel={paginationModel}
+              onPaginationModelChange={(model) => setPaginationModel(model)}
+              pageSizeOptions={[5, 10, 15]}
+              getRowId={(row: AlertaUser) => row.uid}
+            />
           </div>
         ) : null}
       </div>
