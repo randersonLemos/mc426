@@ -43,14 +43,13 @@ export default function Admin({ setActiveTheme }: AdminProps) {
   const [usersSigned, setUsersSigned] = useState<any>([])
   useEffect(() => {
     async function getData() {
+      const users: any[] = []
       const querySnapshot = await getDocs(collection(db, 'users'))
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, ' => ', doc.data())
-        const newArray = [...usersSigned]
-        newArray.push(doc.data())
-        setUsersSigned((prevState: any) => [...prevState, doc.data()])
+        users.push(doc.data())
       })
+      setUsersSigned(users)
     }
 
     if (usersSigned.length === 0) getData()
@@ -62,7 +61,7 @@ export default function Admin({ setActiveTheme }: AdminProps) {
       <SendMessageForm />
       {usersSigned ? (
         <div style={{ width: '80%', marginTop: '30px'}}>
-          <DataGrid rows={usersSigned} columns={columns} getRowId={(row: any) => row.userInfo} />
+          <DataGrid rows={usersSigned} columns={columns} getRowId={(row: any) => row.uid} />
         </div>
       ) : null}
     </main>

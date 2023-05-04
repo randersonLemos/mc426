@@ -10,7 +10,9 @@ export default function SendMessageForm() {
   async function handleSendMessage(ev: FormEvent) {
     ev.preventDefault()
     setLoading(true)
-    await sendMessage(message)
+    const response = await sendMessage(message)
+    if (response)
+      console.log(response)
     setLoading(false)
   }
 
