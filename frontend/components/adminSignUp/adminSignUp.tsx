@@ -32,17 +32,14 @@ export default function AdminSignUp() {
         console.log(user)
         flag = true
         return user
-        // ...
       })
       .catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
         console.log(errorCode, errorMessage)
-        // ..
       })) as User
 
     if (flag) {
-      // const userString = sessionStorage.getItem('user') as string
       await updateProfile(user, { displayName: name }).catch((err) => console.log(err))
 
       try {
@@ -52,7 +49,7 @@ export default function AdminSignUp() {
           email: user.email,
         })
         console.log('Document written with ID: ', docRef.id)
-        router.push('admin/dashboard')
+        router.push('dashboard')
       } catch (e) {
         console.error('Error adding document: ', e)
       }

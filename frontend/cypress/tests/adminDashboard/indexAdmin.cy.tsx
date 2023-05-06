@@ -1,5 +1,5 @@
 import React from 'react'
-import Admin from './index'
+import Admin from '../../../pages/admin/dashboard/index'
 import * as NextRouter from 'next/router'
 
 const pathname = "/admin/dashboard"
@@ -10,7 +10,7 @@ describe('<Admin />', () => {
     // see: https://on.cypress.io/mounting-react
     cy.stub(NextRouter, 'useRouter').returns({ pathname, push })
     cy.mount(
-      <Admin setActiveTheme={(value) => value} />
+      <Admin />
     )
   })
 })

@@ -94,8 +94,7 @@ export default function SignUpForm() {
         sessionStorage.setItem('name', args.name)
         sessionStorage.setItem('email', args.email)
         sessionStorage.setItem('phone', args.phone)
-        sessionStorage.setItem('birth', args.birth.format('DD/MM/YYYY'))
-        console.log('codigo enviado')
+        sessionStorage.setItem('birth', String(args.birth.unix()))
         router.push('/verify')
         return confirmationResult
       })
@@ -116,7 +115,7 @@ export default function SignUpForm() {
         size: 'invisible',
         callback: () => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
-          handleSignUp()
+          // handleSignUp()
         },
       },
       auth
@@ -126,8 +125,6 @@ export default function SignUpForm() {
     // })
     setAppVerifier(window.recaptchaVerifier)
   }, [])
-
-  useEffect(() => console.log(birth), [birth])
 
   return (
     <form className={styles.form} onSubmit={handleSignUp}>
@@ -172,7 +169,6 @@ export default function SignUpForm() {
           inputComponent={TextMaskCustom as any}
         />
       </FormControl>
-      {/* <TextField id="outlined-basic" label="Telefone" variant="filled" /> */}
       <FormLabel className={styles.label}>Data de Nascimento</FormLabel>
       <DatePicker
         className={styles.input}
@@ -190,7 +186,7 @@ export default function SignUpForm() {
         type="submit"
         onSubmit={handleSignUp}
       >
-        {loading ? <CircularProgress color="secondary" size={24} /> : 'Submeter'}
+        {loading ? <CircularProgress color="secondary" size={24} /> : 'Cadastrar'}
       </Button>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         <div id="recaptcha"></div>

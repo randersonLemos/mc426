@@ -1,15 +1,11 @@
 import React from 'react'
 import Head from 'next/head'
-import { useTheme } from '@mui/material'
+import { Typography, useTheme } from '@mui/material'
 import SignUpForm from '@/components/signUpForm/signUpForm'
 import Header from '@/components/header/header'
 import styles from '@/styles/Home.module.css'
 
-type HomeProps = {
-  setActiveTheme: React.Dispatch<React.SetStateAction<'light' | 'dark'>>
-}
-
-export default function Home({ setActiveTheme }: HomeProps) {
+export default function Home() {
   const theme = useTheme()
 
   return (
@@ -21,7 +17,8 @@ export default function Home({ setActiveTheme }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.container} style={{ backgroundColor: theme.palette.background.default }}>
-        <Header setActiveTheme={setActiveTheme} />
+        <Header />
+        <Typography variant="h2" color={theme.palette.text.secondary} style={{marginTop: '30px'}}>Cadastre-se agora para receber alertas!</Typography>
         <SignUpForm />
       </main>
     </>

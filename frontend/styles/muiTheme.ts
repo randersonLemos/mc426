@@ -1,6 +1,13 @@
 import { Theme } from '@emotion/react'
 import { PaletteMode, createTheme } from '@mui/material'
 
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '700', '900']
+})
+
 export interface ThemeProps extends Theme {
   palette: {
     primary: {
@@ -43,21 +50,34 @@ export interface ThemeProps extends Theme {
 export const theme = (mode: PaletteMode) =>
   createTheme({
     typography: {
-      fontFamily: 'Roboto',
+      fontFamily: roboto.style.fontFamily,
       fontSize: 15,
       h1: {
-        fontWeight: 600,
+        fontSize: '2.3rem',
+        fontWeight: 700,
+        transition: 'font-size 500ms',
+        '@media (max-width:600px)': {
+          fontSize: '2rem',
+        },
       },
       h2: {
-        fontWeight: 600,
+        fontSize: '2.3rem',
+        fontWeight: 500,
+        transition: 'font-size 500ms',
+        '@media (max-width:600px)': {
+          fontSize: '2rem',
+        },
       },
       h3: {
         fontSize: '2.2rem',
-        transition: 'all 500ms',
+        transition: 'font-size 500ms',
         '@media (max-width:600px)': {
           fontSize: '1.8rem',
         },
       },
+      button: {
+        textTransform: 'none'
+      }
     },
     palette: {
       mode,
@@ -89,7 +109,7 @@ export const theme = (mode: PaletteMode) =>
             },
             background: {
               default: '#E1BEE7',
-              paper: '#ffffff',
+              paper: 'rgb(225, 190, 231)',
             },
             text: {
               primary: 'rgba(0,0,0,0.87)',

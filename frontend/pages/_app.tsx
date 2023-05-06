@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-empty-function */
+import React, { createContext, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -47,18 +48,29 @@ if (app.name && typeof window !== 'undefined') {
 
 export { analytics, app, db }
 
+type ThemeContext = {
+  theme: 'light' | 'dark'
+  toggleTheme: (theme: 'light' | 'dark') => void
+}
+
+const defaultTheme: ThemeContext = { theme: 'light', toggleTheme: () => {} }
+
+export const MyTheme = createContext(defaultTheme)
+
 export default function App({ Component, pageProps }: AppProps) {
-  const [activeTheme, setActiveTheme] = React.useState<'light' | 'dark'>('light')
+  const [themeState, setThemeState] = useState<'light' | 'dark'>('light')
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br" localeText={brazilLocale}>
-      <ThemeProvider theme={theme(activeTheme)}>
-        <StyledEngineProvider injectFirst>
-          <main className={roboto.className} style={{height: '100%'}}>
-            <Component {...pageProps} setActiveTheme={setActiveTheme} />
-          </main>
-        </StyledEngineProvider>
-      </ThemeProvider>
+      <MyTheme.Provider value={{theme: themeState, toggleTheme: setThemeState}}>
+        <ThemeProvider theme={theme(themeState)}>
+          <StyledEngineProvider injectFirst>
+            <main className={roboto.className} style={{ height: '100%' }}>
+              <Component {...pageProps} />
+            </main>
+          </StyledEngineProvider>
+        </ThemeProvider>
+      </MyTheme.Provider>
     </LocalizationProvider>
   )
 }
