@@ -1,18 +1,14 @@
 import React from 'react'
-import styles from '@/styles/success.module.css'
 import { Typography, useTheme } from '@mui/material'
 import Header from '@/components/header/header'
 import { CheckCircle } from '@mui/icons-material'
+import styles from '@/styles/success.module.css'
 
-type SuccessProps = {
-  setActiveTheme: React.Dispatch<React.SetStateAction<'light' | 'dark'>>
-}
-
-export default function Success({ setActiveTheme }: SuccessProps) {
+export default function Success() {
   const theme = useTheme()
   return (
     <main className={styles.container} style={{ backgroundColor: theme.palette.background.default }}>
-      <Header setActiveTheme={setActiveTheme} />
+      <Header />
       <Typography className={styles.title} variant="h3" color={theme.palette.text.secondary}>
         Cadastrado com sucesso!
       </Typography>

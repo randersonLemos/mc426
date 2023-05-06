@@ -4,7 +4,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IMaskInput } from 'react-imask'
 import { useRouter } from 'next/router'
 import { ApplicationVerifier, getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { FirebaseWindow } from '@/utils/customWindow'
+import { FirebaseWindow } from '@/helpers/customWindow'
 import styles from './signUpStyles.module.css'
 import { app } from '@/pages/_app'
 import dayjs, { Dayjs } from 'dayjs'
@@ -49,61 +49,59 @@ interface SignUpProps {
   appVerifier: ApplicationVerifier
 }
 
-const signUp = async (args: SignUpProps) => {
-  if (args.name.length > 3) {
-    if (args.email.includes('@')) {
-      if (args.phone.length === 14) {
-        const confirmationResult = await signInWithPhoneNumber(auth, args.phone, args.appVerifier)
-          .then((confirmationResult) => {
-            // SMS sent. Prompt user to type the code from the message, then sign the
-            // user in with confirmationResult.confirm(code).
-            window.confirmationResult = confirmationResult
-            sessionStorage.setItem('name', args.name)
-            sessionStorage.setItem('email', args.email)
-            sessionStorage.setItem('phone', args.phone)
-            sessionStorage.setItem('birth', args.birth.format('DD/MM/YYYY'))
-            console.log('codigo enviado')
-            return confirmationResult
-          })
-          .catch((error) => {
-            // Error; SMS not sent
-          })
-        if (confirmationResult) {
-          return true
-        }
-      } else return 'erro no campo telefone'
-    } else return 'erro no campo email'
-  } else return 'erro no campo nome'
-}
-
 export default function SignUpForm() {
   const [values, setValues] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [birth, setBirth] = useState(dayjs('15/06/2000', 'DD/MM/YYYY'))
+  const [birth, setBirth] = useState<Dayjs | null>(null)
   const [nameError, setNameError] = useState(false)
   const [emailError, setEmailError] = useState(false)
+  const [phoneError, setPhoneError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [appVerifier, setAppVerifier] = useState<any>()
   const router = useRouter()
 
-  async function handleSignUp(ev?: FormEvent) {
-    ev?.preventDefault()
-    setLoading(true)
-    if (name.length <= 3) setNameError(true)
+  function ableToLogin(phone: string) {
+    if (name.length < 3) setNameError(true)
     if (!email.includes('@')) setEmailError(true)
-    if (!birth.isValid() || !email.includes('@') || name.length <= 3) {
+    if (phone.length !== 14) setPhoneError(true)
+    if (!birth?.isValid() || !email.includes('@') || name.length < 3 || phone.length !== 14) {
       setLoading(false)
-      return
+      return false
     }
-    const phone = '+55' + values.replace(/[()-\s]/g, '')
-    // console.log(name, email, phone)
 
-    if ((await signUp({ name, email, phone, birth, appVerifier })) === true) {
-      router.push('/verify')
-      setLoading(false)
-    }
+    return true
+  }
+
+  async function handleSignUp(ev?: FormEvent) {
+    const phone = '+55' + values.replace(/[()-\s]/g, '')
+    ev?.preventDefault()
+
+    if (ableToLogin(phone) && birth) await signUp({ name, email, phone, birth, appVerifier })
+    else console.log('login failed')
+
     setLoading(false)
+  }
+
+  async function signUp(args: SignUpProps) {
+    setLoading(true)
+    console.log('login successful')
+    await signInWithPhoneNumber(auth, args.phone, args.appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult
+        sessionStorage.setItem('name', args.name)
+        sessionStorage.setItem('email', args.email)
+        sessionStorage.setItem('phone', args.phone)
+        sessionStorage.setItem('birth', String(args.birth.unix()))
+        router.push('/verify')
+        return confirmationResult
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        console.error(error)
+      })
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +115,7 @@ export default function SignUpForm() {
         size: 'invisible',
         callback: () => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
-          handleSignUp()
+          // handleSignUp()
         },
       },
       auth
@@ -127,8 +125,6 @@ export default function SignUpForm() {
     // })
     setAppVerifier(window.recaptchaVerifier)
   }, [])
-
-  useEffect(() => console.log(birth), [birth])
 
   return (
     <form className={styles.form} onSubmit={handleSignUp}>
@@ -140,6 +136,7 @@ export default function SignUpForm() {
         variant="filled"
         value={name}
         required
+        data-cy="name"
         error={nameError}
         helperText={nameError ? 'Nome deve ter mais de 3 caracteres' : null}
         onChange={(ev) => {
@@ -155,6 +152,7 @@ export default function SignUpForm() {
         variant="filled"
         value={email}
         type="email"
+        data-cy="email"
         required
         onChange={(ev) => setEmail(ev.target.value)}
       />
@@ -164,23 +162,31 @@ export default function SignUpForm() {
         <FilledInput
           value={values}
           onChange={handleChange}
+          data-cy="phone"
           name="textmask"
           id="phone"
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           inputComponent={TextMaskCustom as any}
         />
       </FormControl>
-      {/* <TextField id="outlined-basic" label="Telefone" variant="filled" /> */}
       <FormLabel className={styles.label}>Data de Nascimento</FormLabel>
       <DatePicker
         className={styles.input}
         format="DD/MM/YYYY"
         value={birth}
-        onChange={(value: any) => setBirth(value)}
-        slotProps={{ textField: { variant: 'filled', label: 'Data de Nascimento' } }}
+        data-cy="birth"
+        onChange={(newValue) => setBirth(newValue)}
+        slotProps={{ textField: { variant: 'filled', label: 'Data de Nascimento', id: 'birth' } }}
       />
-      <Button className={styles.button} color="primary" variant="contained" type="submit" onSubmit={handleSignUp}>
-        {loading ? <CircularProgress color="secondary" size={24} /> : 'Submeter'}
+      <Button
+        className={styles.button}
+        data-cy="submit"
+        color="primary"
+        variant="contained"
+        type="submit"
+        onSubmit={handleSignUp}
+      >
+        {loading ? <CircularProgress color="secondary" size={24} /> : 'Cadastrar'}
       </Button>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         <div id="recaptcha"></div>

@@ -2,11 +2,10 @@
   display: flex;
   flex-direction: column;
   width: 400px;
+  min-width: 400px;
 }
-
 .label {
-  margin-top: 20px;
-  font-size: 2rem;
+  font-size: 1.8rem;
   transition: all 500ms;
 }
 
@@ -28,5 +27,6 @@
   }
   .form {
     width: 100%;
+    min-width: 0;
   }
 }

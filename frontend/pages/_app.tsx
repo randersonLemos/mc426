@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-empty-function */
+import React, { createContext, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -7,8 +8,14 @@ import { ThemeProvider } from '@mui/material'
 import { theme } from '@/styles/muiTheme'
 import { StyledEngineProvider } from '@mui/material/styles'
 import { ptBR } from '@mui/x-date-pickers/locales'
+import { Roboto } from 'next/font/google'
+
 import '@/styles/globals.css'
 
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '700', '900'],
+})
 const brazilLocale = ptBR.components.MuiLocalizationProvider.defaultProps.localeText
 
 // Import the functions you need from the SDKs you need
@@ -41,16 +48,29 @@ if (app.name && typeof window !== 'undefined') {
 
 export { analytics, app, db }
 
+type ThemeContext = {
+  theme: 'light' | 'dark'
+  toggleTheme: (theme: 'light' | 'dark') => void
+}
+
+const defaultTheme: ThemeContext = { theme: 'light', toggleTheme: () => {} }
+
+export const MyTheme = createContext(defaultTheme)
+
 export default function App({ Component, pageProps }: AppProps) {
-  const [activeTheme, setActiveTheme] = React.useState<'light' | 'dark'>('light')
+  const [themeState, setThemeState] = useState<'light' | 'dark'>('light')
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br" localeText={brazilLocale}>
-      <ThemeProvider theme={theme(activeTheme)}>
-        <StyledEngineProvider injectFirst>
-          <Component {...pageProps} setActiveTheme={setActiveTheme} />
-        </StyledEngineProvider>
-      </ThemeProvider>
+      <MyTheme.Provider value={{theme: themeState, toggleTheme: setThemeState}}>
+        <ThemeProvider theme={theme(themeState)}>
+          <StyledEngineProvider injectFirst>
+            <main className={roboto.className} style={{ height: '100%' }}>
+              <Component {...pageProps} />
+            </main>
+          </StyledEngineProvider>
+        </ThemeProvider>
+      </MyTheme.Provider>
     </LocalizationProvider>
   )
 }
