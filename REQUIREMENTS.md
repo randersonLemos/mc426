@@ -1,3 +1,4 @@
+Nota: Visualização é melhor no modo "Code".
 Foi-se feita uma sessão de brainstorming de cinco minutos sem direção entre os membros do grupo, cujo conteúdo foi posteriormente consolidade.
 
 Transcrição de trechos selecionados da sessão de brainstorming:
