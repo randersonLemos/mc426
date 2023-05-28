@@ -16,7 +16,7 @@ Considerando a descrição de componentes C4 - Nível3, o projeto Envio de Mensa
 
 * O componente **Phone Message Sending** é responsável por receber a mensagem de alerta com o telefone do destinatário e enviar esse conteúdo por meio de API para o componente **Phone Message Sending System**. Esse componene usa principalmente React and MUI; 
 
-* O componenete **Phone Message Sending System** é resonsável por enviar para o destinatário as mensagens de alerta. Esse componente engloba um projeto inteiro chamado [Venom][https://github.com/orkestral/venom] que é desenvolvido em javascript;
+* O componenete **Phone Message Sending System** é resonsável por enviar para o destinatário as mensagens de alerta. Esse componente engloba um projeto inteiro chamado [Venom](https://github.com/orkestral/venom) que é desenvolvido em javascript;
 
 
 * O componente **Sign In Controller** é responsável por controlar toda parte de autentição do sistema web do projeto de Envio de Mensagem de Alerta. Esse está desenvolvido em React com MUI e utiliza a biblioteca Firebase;
