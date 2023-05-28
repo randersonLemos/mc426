@@ -3,7 +3,10 @@
 Esse projeto tem por objetivo criar uma aplicação que permita o envio de mensagens de interesse público para a população alvo. O intuito é facilitar o compartilhamento de informações como eventos, situações emergenciais, campanhas de saúde e outros assuntos relevantes para a comunidade, fornecendo um meio que permita grande alcance em um curto período de tempo e a possibilidade de escolha do público alvo das mensagens.
 O projeto consiste em uma aplicação web para envio da mensagens e um banco de dados para o cadastramento de dados dos destinatários. 
 
-# Estilo arquitetural
+
+# Descrição da arquitetura
+Diagrama C4 em nível de componentes:
+![image](https://github.com/randersonLemos/mc426/assets/54808604/ff888503-30c5-4f8b-953b-bb289c4799c3)
 
 O estilo arquitetural da aplicação foi classificado como uma conjunção de dois estilos arquiteturais.
 
