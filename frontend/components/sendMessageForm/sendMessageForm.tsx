@@ -91,7 +91,6 @@ export default function SendMessageForm({
 
   async function handleSendMessage(ev: FormEvent) {
     ev.preventDefault();
-    console.log(recipients);
 
     const phones: string[] = [];
     setLoading(true);
