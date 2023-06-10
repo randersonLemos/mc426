@@ -81,6 +81,33 @@ const start = async (client) => {
   });
 
 
+  //Envia mensagem de texto
+  app.post('/api/chatbot/sendtextmany/', async (request, response) => {
+    try {
+      const numbers = request.body.numbers
+      const message = request.body.message
+
+      numbers.forEach(async (element) => {
+          console.log('Chatbot: sending message...', element)
+          let number = element + '@c.us'
+
+          await client.sendText(number, message)
+          .then( (result) => {
+            console.log('Result: ', result); //return object success
+          })
+          .catch( (error) => {
+            console.error('Error when sending: ', error); //return object error
+            response.status(400).json({ status: 'ERROR' })
+          })
+      });
+      response.status(200).json('Ok')
+    } catch (error) {
+        console.error('Error when sending: ', error); //return object error
+        response.status(400).json({ status: 'ERROR' })
+
+    }
+  });
+
 
   //Envia imagem para um grupo
   app.post('/api/chatbot/group/sendimage', async (request, response) => {
