@@ -8,7 +8,7 @@ describe('<SendMessageForm />', () => {
       // .then((console) => {
       //  cy.spy(console, 'log').as('consoleLog')
       // })
-    cy.mount(<SendMessageForm />)
+    cy.mount(<SendMessageForm names={[]} recipients={[]} />)
     // cy.get('[data-cy="message"]').type('Essa eh uma mensagem de teste')
     // cy.get('[data-cy="submit"]').click()
 

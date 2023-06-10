@@ -60,6 +60,7 @@ export default function Verify() {
           uid: user.uid,
           name: sessionStorage.getItem('name'),
           email: sessionStorage.getItem('email'),
+          city: sessionStorage.getItem('city'),
           phone: sessionStorage.getItem('phone'),
           birthDay: Number(sessionStorage.getItem('birth')),
         })
