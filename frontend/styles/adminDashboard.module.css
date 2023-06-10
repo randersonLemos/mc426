@@ -5,6 +5,7 @@
   padding-top: 70px;
   margin-top: 30px;
   min-height: 100%;
+  max-width: 100%;
 }
 
 .title {
@@ -16,6 +17,7 @@
 
 .adaptativeContainer {
   display: flex;
+  max-width: 100%;
 }
 
 .adaptativeContainer > form {
@@ -23,8 +25,9 @@
 }
 
 .tableContainer {
-  width: 60%;
-  height: 430px;
+  max-width: calc(100% - 500px);
+  flex: 1;
+  height: auto;
 }
 
 @media screen and (max-width: 600px) {
@@ -51,6 +54,7 @@
   }
 
   .tableContainer {
+    max-width: none;
     width: 100%;
     margin-top: 30px;
     height: auto;
