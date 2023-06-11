@@ -1,7 +1,6 @@
 import React, { FormEvent, useState } from 'react'
 import { Button, CircularProgress, FormLabel, TextField } from '@mui/material'
 import styles from './adminSignIn.module.css'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { app } from '@/pages/_app'
 import { useRouter } from 'next/router'
 import BackendAdapter from '@/helpers/adpter/backendAdapter'
