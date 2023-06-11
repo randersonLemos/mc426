@@ -2,6 +2,16 @@
 
 Esse projeto tem por objetivo criar uma aplicação que permita o envio de mensagens de interesse público para a população alvo. O intuito é facilitar o compartilhamento de informações como eventos, situações emergenciais, campanhas de saúde e outros assuntos relevantes para a comunidade, fornecendo um meio que permita grande alcance em um curto período de tempo e a possibilidade de escolha do público alvo das mensagens.
 O projeto consiste em uma aplicação web para envio da mensagens e um banco de dados para o cadastramento de dados dos destinatários. 
+# Sistema de envio de alertas (administradores)
+Acesse em: https://mc426.web.app/admin
+
+https://github.com/randersonLemos/mc426/assets/48441789/2bbe995a-c260-406e-b5ef-28d76f828440
+# Sistema de recebimento de alertas
+Acesse em: https://mc426.web.app
+
+Observação: As mensagens são recebidas pelo WhatsApp.
+
+![sistema_recebimento](https://github.com/randersonLemos/mc426/assets/48441789/49311838-150a-49ae-a32b-9b47c84ab66d)
 
 # FAQ
 ### [Como acessar o sistema online de recebimento e envio de alertas?](https://github.com/randersonLemos/mc426/wiki/Acessando-o-sistema)
