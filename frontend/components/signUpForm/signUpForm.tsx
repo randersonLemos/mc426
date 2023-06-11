@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {
   TextField,
   FormControl,
@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { FirebaseWindow } from "@/helpers/customWindow";
 import BackendAdapter from "@/helpers/adpter/backendAdapter";
 import { app } from "@/pages/_app";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { ApplicationVerifier } from "firebase/auth";
 import styles from "./signUpStyles.module.css";
 
@@ -31,6 +31,7 @@ interface CustomProps {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function TextMaskCustom(props, ref: any) {
     const { onChange, ...other } = props;
     return (
@@ -73,6 +74,7 @@ export default function SignUpForm() {
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [appVerifier, setAppVerifier] = useState<any>();
   const router = useRouter();
 
