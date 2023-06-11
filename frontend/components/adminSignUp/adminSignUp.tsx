@@ -1,13 +1,12 @@
 import React, { FormEvent, useState } from 'react'
 import styles from './adminSignUp.module.css'
 import { Button, CircularProgress, FormLabel, TextField } from '@mui/material'
-import { User, createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth'
-import { app, db } from '@/pages/_app'
-import { addDoc, collection } from 'firebase/firestore'
+import { app } from '@/pages/_app'
 import { useRouter } from 'next/router'
+import BackendAdapter from '@/helpers/adpter/backendAdapter'
 
-const auth = getAuth(app)
-auth.useDeviceLanguage()
+const adapter = new BackendAdapter("firebase", app)
+adapter.backend?.auth.useDeviceLanguage();
 
 export default function AdminSignUp() {
   const [name, setName] = useState('')
@@ -22,39 +21,7 @@ export default function AdminSignUp() {
     ev.preventDefault()
     setLoading(true)
 
-    let flag = false
-
-    const user = (await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user
-        sessionStorage.setItem('user', JSON.stringify(user))
-        console.log(user)
-        flag = true
-        return user
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorCode, errorMessage)
-      })) as User
-
-    if (flag) {
-      await updateProfile(user, { displayName: name }).catch((err) => console.log(err))
-
-      try {
-        const docRef = await addDoc(collection(db, 'admins'), {
-          userInfo: user.uid,
-          name,
-          email: user.email,
-        })
-        console.log('Document written with ID: ', docRef.id)
-        router.push('dashboard')
-      } catch (e) {
-        console.error('Error adding document: ', e)
-      }
-    }
-
+    await adapter.backend?.signUp(email, password, { shouldRedirect: true, redirect: () => router.push("dashboard") }, name)
     setLoading(false)
   }
 

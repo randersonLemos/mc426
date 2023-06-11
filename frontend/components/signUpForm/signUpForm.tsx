@@ -111,7 +111,7 @@ export default function SignUpForm() {
   async function signUp(args: SignUpProps) {
     setLoading(true);
     console.log("login successful");
-    await adapter.backend?.signIn(args, { shouldRedirect: true, redirect: () => router.push("/verify") }, window)
+    await adapter.backend?.signInWithPhone(args, { shouldRedirect: true, redirect: () => router.push("/verify") }, window)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
