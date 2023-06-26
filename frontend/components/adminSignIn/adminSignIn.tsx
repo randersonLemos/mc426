@@ -1,44 +1,74 @@
-import React, { FormEvent, useState } from 'react'
-import { Button, CircularProgress, FormLabel, TextField } from '@mui/material'
-import styles from './adminSignIn.module.css'
-import { app } from '@/pages/_app'
-import { useRouter } from 'next/router'
-import BackendAdapter from '@/helpers/adpter/backendAdapter'
+import React, { FormEvent, useState } from "react";
+import { Button, CircularProgress, FormLabel, TextField } from "@mui/material";
+import styles from "./adminSignIn.module.css";
+import { app } from "@/pages/_app";
+import { useRouter } from "next/router";
+import BackendAdapter from "@/helpers/adpter/backendAdapter";
 
-const adapter = new BackendAdapter("firebase", app)
-adapter.backend?.auth.useDeviceLanguage()
+const adapter = new BackendAdapter("firebase", app);
+adapter.backend?.auth.useDeviceLanguage();
 
 export default function AdminSignIn() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
+
+  function ableToSignIn(email: string, password: string) {
+    const passRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[A-Z]).{8,100}$/;
+
+    if (!email.includes("@") || !passRegex.test(password)) {
+      console.log("unable to sign in");
+      return false;
+    }
+
+    console.log("able to sign in");
+    return true;
+  }
 
   async function handleSignIn(ev: FormEvent) {
-    ev.preventDefault()
-    setLoading(true)
+    ev.preventDefault();
+    setLoading(true);
 
-    await adapter.backend?.signInWithEmail(email, password, { shouldRedirect: true, redirect: () => router.push('admin/dashboard') })
+    if (ableToSignIn(email, password))
+      await adapter.backend?.signInWithEmail(email, password, {
+        shouldRedirect: true,
+        redirect: () => router.push("admin/dashboard"),
+      });
 
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
     <form className={styles.form} onSubmit={handleSignIn}>
       <FormLabel className={styles.label}>Email</FormLabel>
-      <TextField label="Email" variant="filled" value={email} onChange={(ev) => setEmail(ev.target.value)} />
+      <TextField
+        label="Email"
+        data-cy="email"
+        variant="filled"
+        value={email}
+        onChange={(ev) => setEmail(ev.target.value)}
+      />
       <FormLabel className={styles.label}>Senha</FormLabel>
       <TextField
         label="Senha"
+        data-cy="password"
         variant="filled"
         type="password"
         value={password}
         onChange={(ev) => setPassword(ev.target.value)}
       />
-      <Button variant="contained" color="primary" type="submit" onSubmit={handleSignIn} style={{ marginTop: '30px' }}>
-        {loading ? <CircularProgress color="secondary" size={24} /> : 'Entrar'}
+      <Button
+        variant="contained"
+        data-cy="submit"
+        color="primary"
+        type="submit"
+        onSubmit={handleSignIn}
+        style={{ marginTop: "30px" }}
+      >
+        {loading ? <CircularProgress color="secondary" size={24} /> : "Entrar"}
       </Button>
     </form>
-  )
+  );
 }

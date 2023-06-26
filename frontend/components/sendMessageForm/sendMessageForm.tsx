@@ -33,19 +33,32 @@ export default function SendMessageForm({
     setOpen(false);
   };
 
+  function canSendMessage(message: string) {
+    if (!message || names.length === 0) {
+      console.log("cant send");
+      return false;
+    }
+
+    console.log("can send");
+    return true;
+  }
+
   async function handleSendMessage(ev: FormEvent) {
     ev.preventDefault();
 
     const phones: string[] = [];
     setLoading(true);
 
-    recipients.forEach((recipient) => {
-      const phone = recipient.replace(/[+]/g, "");
-      phones.push(phone);
-    });
+    if (canSendMessage(message)) {
+      recipients.forEach((recipient) => {
+        const phone = recipient.replace(/[+]/g, "");
+        phones.push(phone);
+      });
 
-    const response = await sendMessageToMany(phones, message);
-    if (response) setOpen(true);
+      const response = await sendMessageToMany(phones, message);
+      if (response) setOpen(true);
+    }
+
     setLoading(false);
   }
 
@@ -56,6 +69,7 @@ export default function SendMessageForm({
       <FormLabel className={styles.label}>Mensagem</FormLabel>
       <TextField
         label="Mensagem"
+        data-cy="message"
         variant="filled"
         multiline
         minRows={5}
@@ -65,6 +79,7 @@ export default function SendMessageForm({
       />
       <Button
         variant="contained"
+        data-cy="submit"
         color="primary"
         type="submit"
         onSubmit={handleSendMessage}
