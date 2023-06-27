@@ -7,6 +7,17 @@
   align-items: center;
 }
 
+.campaignContainer {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.campaignContainer > div {
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
 @media screen and (max-width: 600px) {
   .container {
     padding: 20px;

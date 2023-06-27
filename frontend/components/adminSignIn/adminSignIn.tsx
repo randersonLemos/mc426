@@ -1,12 +1,12 @@
 import React, { FormEvent, useState } from 'react'
 import { Button, CircularProgress, FormLabel, TextField } from '@mui/material'
 import styles from './adminSignIn.module.css'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { app } from '@/pages/_app'
 import { useRouter } from 'next/router'
+import BackendAdapter from '@/helpers/adpter/backendAdapter'
 
-const auth = getAuth(app)
-auth.useDeviceLanguage()
+const adapter = new BackendAdapter("firebase", app)
+adapter.backend?.auth.useDeviceLanguage()
 
 export default function AdminSignIn() {
   const [email, setEmail] = useState('')
@@ -19,23 +19,7 @@ export default function AdminSignIn() {
     ev.preventDefault()
     setLoading(true)
 
-    let flag = false
-
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user
-        sessionStorage.setItem('user', JSON.stringify(user))
-        flag = true
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorCode, errorMessage)
-      })
-
-    if (flag) router.push('admin/dashboard')
+    await adapter.backend?.signInWithEmail(email, password, { shouldRedirect: true, redirect: () => router.push('admin/dashboard') })
 
     setLoading(false)
   }

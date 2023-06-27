@@ -119,7 +119,6 @@ export default function Admin() {
         const birthDay = dayjs.unix(doc.data().birthDay).add(1, "days");
         const today = dayjs();
         const userData = doc.data();
-        console.log(userData);
         userData.age = today.diff(birthDay, "years");
         users.push(userData as AlertaUser);
 
