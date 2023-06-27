@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { Typography } from "@mui/material";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -24,7 +23,7 @@ export default function CampaignCard({
   return (
     <div className={styles.container} onClick={onClick}>
       <section className={styles.media}>
-        <Image
+        <img
           src={imgSrc || ""}
           width={320}
           height={165}
