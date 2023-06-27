@@ -21,7 +21,7 @@ export default function AdminSignUp() {
     ev.preventDefault()
     setLoading(true)
 
-    await adapter.backend?.signUp(email, password, { shouldRedirect: true, redirect: () => router.push("dashboard") }, name)
+    await adapter.backend?.signUp(email, password, { shouldRedirect: true, redirect: () => router.push("/admin/campaignSelect") }, name)
     setLoading(false)
   }
 

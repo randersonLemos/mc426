@@ -57,20 +57,21 @@ export default function Home() {
                 selected={selected[0]}
                 imgSrc="/assets/vaccination2.jpg"
                 onClick={() => handleSelected(0)}
-                description="Fique por dentro das campanhas de vacinação na sua região"
+                description="Fique por dentro das campanhas de vacinação na sua região."
               />
               <CampaignCard
                 title="Tempo e Clima"
                 selected={selected[1]}
                 imgSrc="/assets/weather2.jpg"
                 onClick={() => handleSelected(1)}
-                description="Receba alertas sobre o tempo na sua região, como alertas de chuva forte, queda brusca de temperatura, entre outros!"
+                description="Receba alertas sobre o tempo na sua região, como alertas de chuva forte, queda brusca de temperatura, entre outros."
               />
               <CampaignCard
                 title="Desastres naturais"
                 selected={selected[2]}
                 onClick={() => handleSelected(2)}
                 imgSrc="/assets/inundation.jpg"
+                description="Receba alertas sobre possíveis desastres naturais que podem acontecer na sua região."
               />
             </div>
             {selected.includes(true) ? (
