@@ -1,0 +1,27 @@
+.container {
+  border-radius: 20px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+  width: 320px;
+  background-color: #613669;
+}
+
+.container:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+.media {
+  position: relative;
+}
+
+.checkContainer {
+  position: absolute;
+  top: 30%;
+  left: 120px;
+}
+
+.description {
+  padding-inline: 8px;
+  color: rgb(241, 241, 241);
+  padding-bottom: 30px;
+}
