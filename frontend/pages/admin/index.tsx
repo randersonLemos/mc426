@@ -26,7 +26,7 @@ export default function SignUp() {
     return () => unsubscribe()
   }, [])
 
-  if (user) router.push('/admin/dashboard')
+  if (user) router.push('/admin/campaignSelect')
 
   return (
     <main className={styles.container} style={{ backgroundColor: theme.palette.background.default }}>
