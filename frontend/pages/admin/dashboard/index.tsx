@@ -23,6 +23,9 @@ interface AlertaUser {
   phone: string;
   birthDay: Timestamp | string;
   uid: string;
+  vaccination: boolean;
+  weather: boolean;
+  disaster: boolean;
 }
 
 const columns: GridColDef[] = [
@@ -95,10 +98,13 @@ export default function Admin() {
     pageSize: 10,
   });
   const [user, setUser] = useState<User | null>(null);
-  const theme = useTheme();
-  const router = useRouter();
   const [rowSelectionModel, setRowSelectionModel] =
     React.useState<GridRowSelectionModel>([]);
+  const [vaxCampaign, setVaxCampaign] = useState(false);
+  const [weatherCampaign, setWeatherCampaign] = useState(false);
+  const [disasterCampaign, setDisasterCampaign] = useState(false);
+  const theme = useTheme();
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -113,6 +119,18 @@ export default function Admin() {
     const users: AlertaUser[] = [];
     async function getData() {
       const querySnapshot = await getDocs(collection(db, "users"));
+
+      const isVaxCampaign =
+        localStorage.getItem("vaxCampaign") === "false" ? false : true;
+      const isWeatherCampaign =
+        localStorage.getItem("weatherCampaign") === "false" ? false : true;
+      const isDisasterCampaign =
+        localStorage.getItem("disasterCampaign") === "false" ? false : true;
+
+      setVaxCampaign(isVaxCampaign);
+      setWeatherCampaign(isWeatherCampaign);
+      setDisasterCampaign(isDisasterCampaign);
+
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, ' => ', doc.data())
@@ -120,7 +138,27 @@ export default function Admin() {
         const today = dayjs();
         const userData = doc.data();
         userData.age = today.diff(birthDay, "years");
-        users.push(userData as AlertaUser);
+        // Check if user selected the active campaign
+
+        if (isVaxCampaign && isWeatherCampaign && isDisasterCampaign)
+          users.push(userData as AlertaUser);
+        else if (isVaxCampaign && isWeatherCampaign) {
+          if (userData.vaccination || userData.weather)
+            users.push(userData as AlertaUser);
+        } else if (isVaxCampaign && isDisasterCampaign) {
+          if (userData.vaccination || userData.disaster) {
+            users.push(userData as AlertaUser);
+          }
+        } else if (isWeatherCampaign && isDisasterCampaign) {
+          if (userData.weather || userData.disaster) {
+            users.push(userData as AlertaUser);
+          }
+        } else if (isVaxCampaign && userData.vaccination)
+          users.push(userData as AlertaUser);
+        else if (isWeatherCampaign && userData.weather)
+          users.push(userData as AlertaUser);
+        else if (isDisasterCampaign && userData.disaster)
+          users.push(userData as AlertaUser);
 
         // return today.diff(birthDay, "years");
       });
@@ -141,8 +179,21 @@ export default function Admin() {
         <Typography variant="h2" color={theme.palette.text.secondary}>
           Bem vindo, {user.displayName}!
         </Typography>
+        <Typography variant="h4" color={theme.palette.text.secondary}>
+          Campanhas ativas: {vaxCampaign ? "Vacinação" : ""}{" "}
+          {weatherCampaign ? "Tempo" : ""}{" "}
+          {disasterCampaign ? "Desastre naturais" : ""}
+        </Typography>
         <Button
-          variant="text"
+          variant="outlined"
+          color="primary"
+          style={{ marginTop: "10px" }}
+          onClick={() => router.push("/admin/campaignSelect")}
+        >
+          Selecionar Campanhas
+        </Button>
+        <Button
+          variant="outlined"
           color="secondary"
           style={{ marginTop: "10px" }}
           onClick={() => signOut(auth)}
