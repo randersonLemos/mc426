@@ -53,7 +53,8 @@ export default function AdminSignUp() {
         name
       );
 
-    setLoading(false);
+    await adapter.backend?.signUp(email, password, { shouldRedirect: true, redirect: () => router.push("/admin/campaignSelect") }, name)
+    setLoading(false)
   }
 
   return (

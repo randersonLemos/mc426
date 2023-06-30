@@ -1,93 +1,106 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { CircularProgress, Typography, useTheme } from '@mui/material'
-import Header from '@/components/header/header'
-import VerificationInput from 'react-verification-input'
-import { FirebaseWindow } from '@/helpers/customWindow'
-import { db, app } from '@/pages/_app'
-import { collection, addDoc } from 'firebase/firestore'
-import styles from '@/styles/verify.module.css'
-import { getAuth, signOut, updateProfile } from 'firebase/auth'
-import { userExists } from '@/helpers/apiMethods'
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { CircularProgress, Typography, useTheme } from "@mui/material";
+import Header from "@/components/header/header";
+import VerificationInput from "react-verification-input";
+import { FirebaseWindow } from "@/helpers/customWindow";
+import { db, app } from "@/pages/_app";
+import { collection, addDoc } from "firebase/firestore";
+import styles from "@/styles/verify.module.css";
+import { getAuth, signOut, updateProfile } from "firebase/auth";
+import { userExists } from "@/helpers/apiMethods";
 
-const auth = getAuth(app)
+const auth = getAuth(app);
 
-declare let window: FirebaseWindow
+declare let window: FirebaseWindow;
 
 export default function Verify() {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const theme = useTheme()
-  const router = useRouter()
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const theme = useTheme();
+  const router = useRouter();
 
   async function handleSubmit(verificationCode: string) {
-    setLoading(true)
+    setLoading(true);
     const user = await window.confirmationResult
       .confirm(verificationCode)
       .then((result) => {
         // User signed in successfully.
-        setSuccess(true)
-        const user = result.user
-        return user
+        setSuccess(true);
+        const user = result.user;
+        return user;
       })
       .catch((error) => {
         // User couldn't sign in (bad verification code?)
-        setError(true)
-        console.log('FALHOU LOGAR', error)
+        setError(true);
+        console.log("FALHOU LOGAR", error);
       })
-      .finally(() => setLoading(false))
+      .finally(() => setLoading(false));
 
-    setLoading(true)
+    setLoading(true);
 
     if (user) {
       // Check if user already exists in firestore database
       if (await userExists(user.uid)) {
-        await signOut(auth) // Sigining out user
-        router.push('/success')
-        return
+        await signOut(auth); // Sigining out user
+        router.push("/success");
+        return;
       }
 
       // Setting user display name
-      await updateProfile(user, { displayName: sessionStorage.getItem('name') })
+      await updateProfile(user, { displayName: sessionStorage.getItem("name") })
         .catch((err) => console.log(err))
-        .finally(() => setLoading(false))
+        .finally(() => setLoading(false));
 
       // Adding user to firestore database
       try {
-        setLoading(true)
-        const docRef = await addDoc(collection(db, 'users'), {
+        setLoading(true);
+        const docRef = await addDoc(collection(db, "users"), {
           uid: user.uid,
-          name: sessionStorage.getItem('name'),
-          email: sessionStorage.getItem('email'),
-          city: sessionStorage.getItem('city'),
-          phone: sessionStorage.getItem('phone'),
-          birthDay: Number(sessionStorage.getItem('birth')),
-        })
-        console.log('Document written with ID: ', docRef.id)
+          name: sessionStorage.getItem("name"),
+          email: sessionStorage.getItem("email"),
+          city: sessionStorage.getItem("city"),
+          phone: sessionStorage.getItem("phone"),
+          birthDay: Number(sessionStorage.getItem("birth")),
+          vaccination:
+            localStorage.getItem("vaccination") === "false" ? false : true,
+          weather:
+            localStorage.getItem("weather") === "false" ? false : true,
+          disaster:
+            localStorage.getItem("disaster") === "false" ? false : true,
+        });
+        console.log("Document written with ID: ", docRef.id);
       } catch (e) {
-        console.error('Error adding document: ', e)
+        console.error("Error adding document: ", e);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
 
-      setLoading(true)
+      setLoading(true);
 
-      await signOut(auth) // Sigining out user
+      await signOut(auth); // Sigining out user
 
-      router.push('/success') // Redirecting user to success screen
+      router.push("/success"); // Redirecting user to success screen
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   useEffect(() => {
-    console.log('Carregando:', loading)
-  }, [loading])
+    console.log("Carregando:", loading);
+  }, [loading]);
 
   return (
-    <main className={styles.container} style={{ backgroundColor: theme.palette.background.default }}>
+    <main
+      className={styles.container}
+      style={{ backgroundColor: theme.palette.background.default }}
+    >
       <Header />
-      <Typography className={styles.title} variant="h3" color={theme.palette.text.secondary}>
+      <Typography
+        className={styles.title}
+        variant="h3"
+        color={theme.palette.text.secondary}
+      >
         Digite o código que enviamos para seu telefone
       </Typography>
       <VerificationInput
@@ -99,23 +112,35 @@ export default function Verify() {
         }}
         autoFocus
         onChange={() => {
-          setSuccess(false)
-          setError(false)
+          setSuccess(false);
+          setError(false);
         }}
         length={6}
         onComplete={(code) => handleSubmit(code)}
       />
       {success ? (
-        <Typography variant="caption" style={{ marginTop: '20px', textAlign: 'center' }}>
+        <Typography
+          variant="caption"
+          style={{ marginTop: "20px", textAlign: "center" }}
+        >
           Código validado com sucesso, aguarde a finalização do cadastro
         </Typography>
       ) : null}
       {error ? (
-        <Typography variant="caption" style={{ marginTop: '20px', textAlign: 'center' }}>
+        <Typography
+          variant="caption"
+          style={{ marginTop: "20px", textAlign: "center" }}
+        >
           Código incorreto. Tente novamente...
         </Typography>
       ) : null}
-      {loading ? <CircularProgress color="primary" style={{ marginTop: '30px' }} size={32} /> : null}
+      {loading ? (
+        <CircularProgress
+          color="primary"
+          style={{ marginTop: "30px" }}
+          size={32}
+        />
+      ) : null}
     </main>
-  )
+  );
 }
