@@ -18,7 +18,7 @@ import { Dayjs } from "dayjs";
 import { ApplicationVerifier } from "firebase/auth";
 import styles from "./signUpStyles.module.css";
 
-const adapter = new BackendAdapter("firebase", app)
+const adapter = new BackendAdapter("firebase", app);
 
 declare let window: FirebaseWindow;
 
@@ -79,9 +79,9 @@ export default function SignUpForm() {
   const router = useRouter();
 
   function ableToLogin(phone: string) {
-    if (name.length < 3) setNameError(true);
+    if (!name || name.length < 3 || name.length > 20) setNameError(true);
     if (!email.includes("@")) setEmailError(true);
-    if (!city || city.length < 3) setCityError(true)
+    if (!city || city.length < 3 || city.length > 45) setCityError(true);
     if (phone.length !== 14) setPhoneError(true);
     if (!birth?.isValid()) setBirthError(true);
     if (
@@ -89,13 +89,17 @@ export default function SignUpForm() {
       !email.includes("@") ||
       !city ||
       city.length < 3 ||
+      city.length > 45 ||
+      !name ||
       name.length < 3 ||
-      phone.length !== 14
+      name.length > 20 ||
+      phone.length !== 14 // phone length considers the mask here
     ) {
-      setLoading(false);
+      console.log("login failed");
       return false;
     }
 
+    console.log("login successful");
     return true;
   }
 
@@ -105,15 +109,17 @@ export default function SignUpForm() {
 
     if (ableToLogin(phone) && birth)
       await signUp({ name, email, city, phone, birth, appVerifier });
-    else console.log("login failed");
 
     setLoading(false);
   }
 
   async function signUp(args: SignUpProps) {
     setLoading(true);
-    console.log("login successful");
-    await adapter.backend?.signInWithPhone(args, { shouldRedirect: true, redirect: () => router.push("/verify") }, window)
+    await adapter.backend?.signInWithPhone(
+      args,
+      { shouldRedirect: true, redirect: () => router.push("/verify") },
+      window
+    );
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,7 +127,7 @@ export default function SignUpForm() {
   };
 
   React.useEffect(() => {
-    window.recaptchaVerifier = adapter.backend?.validation()
+    window.recaptchaVerifier = adapter.backend?.validation();
     setAppVerifier(window.recaptchaVerifier);
   }, []);
 
@@ -137,7 +143,7 @@ export default function SignUpForm() {
         required
         data-cy="name"
         error={nameError}
-        helperText={nameError ? "Nome deve ter mais de 3 caracteres" : null}
+        helperText={nameError ? "Nome deve ter entre 3 e 20 caracteres" : null}
         onChange={(ev) => {
           setName(ev.target.value);
           setNameError(false);
@@ -165,6 +171,9 @@ export default function SignUpForm() {
         value={city}
         data-cy="city"
         error={cityError}
+        helperText={
+          cityError ? "Cidade deve ter entre 3 e 45 caracteres" : null
+        }
         required
         onChange={(ev) => setCity(ev.target.value)}
       />
