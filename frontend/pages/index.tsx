@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { Button, Typography, useTheme } from "@mui/material";
 import SignUpForm from "@/components/signUpForm/signUpForm";
@@ -24,7 +24,24 @@ export default function Home() {
     localStorage.setItem("weather", String(selected[1]));
     localStorage.setItem("disaster", String(selected[2]));
 
-    setStep(1);
+    if( canProcceed() ){
+      setStep(1);
+    }
+  }
+
+
+  useEffect ( ()=>{
+    console.log(selected)
+  }, [selected])
+
+
+  function canProcceed() {
+    if (selected.includes(true)) {
+      console.log('can procceed')
+      return true;
+    }
+    console.log('cant procceed')
+    return false
   }
 
   return (
@@ -58,6 +75,7 @@ export default function Home() {
                 imgSrc="/assets/vaccination2.jpg"
                 onClick={() => handleSelected(0)}
                 description="Fique por dentro das campanhas de vacinação na sua região."
+                dataCy='vax'
               />
               <CampaignCard
                 title="Tempo e Clima"
@@ -65,6 +83,7 @@ export default function Home() {
                 imgSrc="/assets/weather2.jpg"
                 onClick={() => handleSelected(1)}
                 description="Receba alertas sobre o tempo na sua região, como alertas de chuva forte, queda brusca de temperatura, entre outros."
+                dataCy='weather'
               />
               <CampaignCard
                 title="Desastres naturais"
@@ -72,17 +91,18 @@ export default function Home() {
                 onClick={() => handleSelected(2)}
                 imgSrc="/assets/inundation.jpg"
                 description="Receba alertas sobre possíveis desastres naturais que podem acontecer na sua região."
+                dataCy='disaster'
               />
             </div>
-            {selected.includes(true) ? (
               <Button
                 variant="contained"
                 style={{ marginTop: "20px" }}
                 onClick={handleSignUp}
+                // disabled={!selected.includes(true)}
+                data-cy='submit'
               >
                 Prosseguir
-              </Button>
-            ) : null}
+              </Button >
           </>
         ) : (
           <>

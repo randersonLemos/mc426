@@ -11,6 +11,7 @@ interface CampaignCardProps {
   imgSrc?: string;
   selected?: boolean;
   onClick?: () => void;
+  dataCy?: string;
 }
 
 export default function CampaignCard({
@@ -19,9 +20,10 @@ export default function CampaignCard({
   imgSrc,
   selected,
   onClick,
+  dataCy,
 }: CampaignCardProps) {
   return (
-    <div className={styles.container} onClick={onClick}>
+    <div className={styles.container} onClick={onClick} data-cy={dataCy}>
       <section className={styles.media}>
         <img
           src={imgSrc || ""}
