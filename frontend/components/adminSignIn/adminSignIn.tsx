@@ -16,7 +16,8 @@ export default function AdminSignIn() {
   const router = useRouter();
 
   function ableToSignIn(email: string, password: string) {
-    const passRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[A-Z]).{8,100}$/;
+    const passRegex =
+      /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[A-Z]).{8,100}$/;
 
     if (!email.includes("@") || !passRegex.test(password)) {
       console.log("unable to sign in");
@@ -31,7 +32,11 @@ export default function AdminSignIn() {
     ev.preventDefault();
     setLoading(true);
 
-    await adapter.backend?.signInWithEmail(email, password, { shouldRedirect: true, redirect: () => router.push('/admin/campaignSelect') })
+    if (ableToSignIn(email, password))
+      await adapter.backend?.signInWithEmail(email, password, {
+        shouldRedirect: true,
+        redirect: () => router.push("/admin/campaignSelect"),
+      });
 
     setLoading(false);
   }
