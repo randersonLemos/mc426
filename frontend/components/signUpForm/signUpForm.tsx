@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { FirebaseWindow } from "@/helpers/customWindow";
 import BackendAdapter from "@/helpers/adpter/backendAdapter";
 import { app } from "@/pages/_app";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { ApplicationVerifier } from "firebase/auth";
 import styles from "./signUpStyles.module.css";
 
@@ -86,6 +86,7 @@ export default function SignUpForm() {
     if (!birth?.isValid()) setBirthError(true);
     if (
       !birth?.isValid() ||
+      birth?.diff(dayjs(), "seconds") >= 0 ||
       !email.includes("@") ||
       !city ||
       city.length < 3 ||

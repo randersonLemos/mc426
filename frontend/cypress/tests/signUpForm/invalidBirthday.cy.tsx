@@ -2,6 +2,7 @@ import React from "react";
 import SignUpForm from "../../../components/signUpForm/signUpForm";
 import Localization from "@/cypress/utils/localization";
 import * as NextRouter from "next/router";
+import dayjs from "dayjs";
 
 const pathname = "/";
 
@@ -23,9 +24,9 @@ describe("<SignUpForm />", () => {
     cy.get('[data-cy="email"]').type("teste100@gmail.com");
     cy.get('[data-cy="city"]').type("Campinas");
     cy.get('[data-cy="phone"]').type("19999999996");
-    const today = new Date();
+    const today = dayjs();
     cy.get("#birth").type(
-      `${today.getDay() + 1}${today.getMonth() + 1}${today.getFullYear()}`
+      `${today.date() + 1}${today.month() + 2}${today.year()}`
     ); // today
     cy.get('[data-cy="submit"]').click();
 
