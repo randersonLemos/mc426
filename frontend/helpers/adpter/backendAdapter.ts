@@ -33,7 +33,7 @@ class BackendAdapter {
     }
 
     validation() {
-      this.backend.validation();
+      return this.backend.validation();
     }
     
     signUp(email: string, password: string, path: string, name: string) {
