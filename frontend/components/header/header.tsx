@@ -21,12 +21,7 @@ export default function Header() {
       <div style={{ display: 'flex', alignItems: 'center' }}>
       	<Button onClick={() => handleMap()}>
       	Mapa
-      	</Button>
-      	
-      	<Button onClick={() => handleSuggestions()}>
-      	Sugestões
-      	</Button>
-      	
+      	</Button>	
         <IconButton onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>
           <Brightness4Icon />
         </IconButton>
@@ -42,14 +37,4 @@ export default function Header() {
 	
   	openInNewTab('/map')
   }
-  
-  //function handleSuggestions() {
-  	//const openInNewTab = (url) => {
-  	//	const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-  	//	if (newWindow) newWindow.opener = null
-	//}
-	
-  	//openInNewTab('/suggestions')
-  	//router.push("/suggestions")
-  //}
 }
