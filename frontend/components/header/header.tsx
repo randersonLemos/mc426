@@ -19,9 +19,9 @@ export default function Header() {
         Sistema de alerta
       </Typography>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-      	<Button onClick={() => handleMap()}>
+      <Button onClick={() => handleMap()}>
         Mapa
-      	</Button>	
+      </Button>	
         <IconButton onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>
           <Brightness4Icon />
         </IconButton>
