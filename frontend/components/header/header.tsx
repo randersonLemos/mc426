@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { IconButton, useTheme, Typography } from '@mui/material'
+import { Button, IconButton, useTheme, Typography } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import { getAuth } from 'firebase/auth'
 import { MyTheme, app } from '@/pages/_app'
@@ -19,10 +19,37 @@ export default function Header() {
         Sistema de alerta
       </Typography>
       <div style={{ display: 'flex', alignItems: 'center' }}>
+      	<Button onClick={() => handleMap()}>
+      	Mapa
+      	</Button>
+      	
+      	<Button onClick={() => handleSuggestions()}>
+      	Sugestões
+      	</Button>
+      	
         <IconButton onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>
           <Brightness4Icon />
         </IconButton>
       </div>
     </header>
   )
+  
+  function handleMap() {
+  	const openInNewTab = (url) => {
+  		const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  		if (newWindow) newWindow.opener = null
+	}
+	
+  	openInNewTab('/map')
+  }
+  
+  //function handleSuggestions() {
+  	//const openInNewTab = (url) => {
+  	//	const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  	//	if (newWindow) newWindow.opener = null
+	//}
+	
+  	//openInNewTab('/suggestions')
+  	//router.push("/suggestions")
+  //}
 }
