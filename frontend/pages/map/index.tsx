@@ -1,6 +1,7 @@
 import React, { useState, Component } from "react";
 
 import styles from "@/styles/Home.module.css";
+import { Loader, MapElement } from "googlemaps/js-api-loader"
 
 class App extends Component {
 	render() {  
