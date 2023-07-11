@@ -10,7 +10,7 @@ class BackendAdapter {
     constructor(backendType: string, app: FirebaseApp) {
         if (backendType === "firebase") {
             this.backend = new BackendFirebase(app)
-            this.backend.auth.useDeviceLanguage();
+            this.backend?.auth.useDeviceLanguage();
         }
         else {
             throw new Error('Suporta apenas firebase')
@@ -18,7 +18,7 @@ class BackendAdapter {
     }
     
     signInWithPhone(args: SignUpProps, window: FirebaseWindow) {
-      this.backend.signInWithPhone(
+      this.backend?.signInWithPhone(
         args,
         { shouldRedirect: true, redirect: () => router.push("/verify") },
         window
@@ -26,18 +26,18 @@ class BackendAdapter {
     }
     
     signInWithEmail(email: string, password: string) {
-      this.backend.signInWithEmail(email, password, {
+      this.backend?.signInWithEmail(email, password, {
         shouldRedirect: true,
         redirect: () => router.push("/admin/campaignSelect"),
       });
     }
 
     validation() {
-      return this.backend.validation();
+      return this.backend?.validation();
     }
     
     signUp(email: string, password: string, path: string, name: string) {
-      this.backend.signUp(
+      this.backend?.signUp(
         email,
         password,
         { shouldRedirect: true, redirect: () => router.push(path) },
