@@ -3,6 +3,7 @@ import BackendFirebase from "./backendFirebase";
 import { FirebaseWindow } from "@/helpers/customWindow";
 import { ApplicationVerifier } from "firebase/auth";
 import { SignUpProps } from "@/components/signUpProps/signUpProps";
+import { useRouter } from "next/router";
 
 class BackendAdapter {
     backend: BackendFirebase | null = null
