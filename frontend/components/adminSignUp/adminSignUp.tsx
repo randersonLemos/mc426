@@ -52,7 +52,7 @@ export default function AdminSignUp() {
         name
       );
 
-    await adapter.backend?.signUp(email, password, "/admin/campaignSelect", name)
+    await adapter.signUp(email, password, "/admin/campaignSelect", name)
     setLoading(false)
   }
 
