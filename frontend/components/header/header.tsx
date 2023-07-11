@@ -19,10 +19,25 @@ export default function Header() {
         Sistema de alerta
       </Typography>
       <div style={{ display: 'flex', alignItems: 'center' }}>
+    
+      	<Button onClick={() => handleSuggestions()}>
+      	Sugestões
+      	</Button>
+      	
         <IconButton onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>
           <Brightness4Icon />
         </IconButton>
       </div>
     </header>
   )
+  
+  function handleSuggestions() {
+  	const openInNewTab = (url) => {
+  		const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  		if (newWindow) newWindow.opener = null
+	}
+	
+  	openInNewTab('/suggestions')
+  	//router.push("/suggestions")
+  }
 }
