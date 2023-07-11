@@ -11,3 +11,4 @@ export interface SignUpProps {
   birth: Dayjs;
   appVerifier: ApplicationVerifier;
 }
+export default {}
