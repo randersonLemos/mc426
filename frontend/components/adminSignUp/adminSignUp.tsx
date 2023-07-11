@@ -48,7 +48,7 @@ export default function AdminSignUp() {
       await adapter.signUp(
         email,
         password,
-        path,
+        "dashboard",
         name
       );
 
