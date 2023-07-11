@@ -2,7 +2,7 @@ import { FirebaseApp } from "firebase/app";
 import BackendFirebase from "./backendFirebase";
 import { FirebaseWindow } from "@/helpers/customWindow";
 import { ApplicationVerifier } from "firebase/auth";
-import SignUpProps from "@/components/signUpProps/signUpProps";
+import { SignUpProps } from "@/components/signUpProps/signUpProps";
 
 class BackendAdapter {
     backend: BackendFirebase | null = null
