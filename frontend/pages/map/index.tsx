@@ -11,7 +11,7 @@ class App extends Component {
 				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXtI7gKepIrTL5IvXt4HCJYJxGxDFCBs
 				&libraries=maps,marker&v=beta">
 				</script>
-				<gmp-map id="map" center="-22.9005447311, -47.0543764492"  zoom="10" map-id="map_id"></gmp-map>
+				<Gmp-map id="map" center="-22.9005447311, -47.0543764492"  zoom="10" map-id="map_id"></Gmp-map>
 			</span>		
 		);
 	}
