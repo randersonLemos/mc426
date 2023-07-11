@@ -22,8 +22,6 @@ const adapter = new BackendAdapter("firebase", app);
 
 declare let window: FirebaseWindow;
 
-adapter.backend?.auth.useDeviceLanguage();
-
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: string;
@@ -116,9 +114,8 @@ export default function SignUpForm() {
 
   async function signUp(args: SignUpProps) {
     setLoading(true);
-    await adapter.backend?.signInWithPhone(
+    await adapter.signInWithPhone(
       args,
-      { shouldRedirect: true, redirect: () => router.push("/verify") },
       window
     );
   }
@@ -128,7 +125,7 @@ export default function SignUpForm() {
   };
 
   React.useEffect(() => {
-    window.recaptchaVerifier = adapter.backend?.validation();
+    window.recaptchaVerifier = adapter.validation();
     setAppVerifier(window.recaptchaVerifier);
   }, []);
 
