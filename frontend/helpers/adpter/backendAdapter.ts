@@ -17,7 +17,7 @@ class BackendAdapter {
         }
     }
     
-    signInWithPhone(args: SignUpProps, window: FireBaseWindow) {
+    signInWithPhone(args: SignUpProps, window: FirebaseWindow) {
       this.backend.signInWithPhone(
         args,
         { shouldRedirect: true, redirect: () => router.push("/verify") },
