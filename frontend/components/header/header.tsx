@@ -20,7 +20,7 @@ export default function Header() {
       </Typography>
       <div style={{ display: 'flex', alignItems: 'center' }}>
       	<Button onClick={() => handleMap()}>
-      	Mapa
+        Mapa
       	</Button>	
         <IconButton onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>
           <Brightness4Icon />
@@ -30,11 +30,10 @@ export default function Header() {
   )
   
   function handleMap() {
-  	const openInNewTab = (url) => {
-  		const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-  		if (newWindow) newWindow.opener = null
-	}
-	
-  	openInNewTab('/map')
+    const openInNewTab = (url) => {
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+      if (newWindow) newWindow.opener = null
+    }
+    openInNewTab('/map')
   }
 }
