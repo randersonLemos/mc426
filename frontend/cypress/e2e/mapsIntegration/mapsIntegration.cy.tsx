@@ -7,4 +7,8 @@ describe('Verify Maps Integration', () => {
         cy.get('#map').should('be.visible');
 
     })
+    
 });
+
+export {}
+
