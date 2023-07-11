@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: cd frontend/ &&  npm i -g firebase-tools@latest
-      - run: cd frontend/ &&  npm i -g @googlemaps/js-api-loader@1.16.2 
+      - run: cd frontend/ &&  npm i -g @googlemaps/js-api-loader
       - run: cd frontend/ && npm ci && npm run build
       - run: cd frontend/ && firebase experiments:enable webframeworks
       - run: cd frontend/ && firebase deploy --project mc426-6ac70 --token ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MC426_6AC70 }}
