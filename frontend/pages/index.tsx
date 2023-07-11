@@ -8,7 +8,7 @@ import CampaignCard from "@/components/campaignCard/campaignCard";
 
 export default function Home() {
   const [step, setStep] = useState(0);
-  const [selected, setSelected] = useState([false, false, false]);
+  const [selected, setSelected] = useState([false, false, false, false]);
   const theme = useTheme();
 
   function handleSelected(id: number) {
@@ -23,6 +23,7 @@ export default function Home() {
     localStorage.setItem("vaccination", String(selected[0]));
     localStorage.setItem("weather", String(selected[1]));
     localStorage.setItem("disaster", String(selected[2]));
+    localStorage.setItem("custom", String(selected[3]));
 
     setStep(1);
   }
@@ -72,6 +73,13 @@ export default function Home() {
                 onClick={() => handleSelected(2)}
                 imgSrc="/assets/inundation.jpg"
                 description="Receba alertas sobre possíveis desastres naturais que podem acontecer na sua região."
+              />
+              <CampaignCard
+                title="Personalizar campanha"
+                selected={selected[3]}
+                onClick={() => handleSelected(3)}
+                imgSrc="/assets/inundation.jpg"
+                description="Sugira alertas alternativos que gostaria de receber."
               />
             </div>
             {selected.includes(true) ? (
