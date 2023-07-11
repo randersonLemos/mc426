@@ -1,5 +1,4 @@
 import React, { useState, Component } from "react";
-import MapDiv from "@components/map";
 
 import { Loader } from "@googlemaps/js-api-loader";
 import styles from "@/styles/Home.module.css";
