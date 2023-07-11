@@ -17,6 +17,7 @@ import { app } from "@/pages/_app";
 import dayjs, { Dayjs } from "dayjs";
 import { ApplicationVerifier } from "firebase/auth";
 import styles from "./signUpStyles.module.css";
+import SignUpProps from "@/components/signUpProps/signUpProps";
 
 const adapter = new BackendAdapter("firebase", app);
 

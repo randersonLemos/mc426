@@ -2,15 +2,7 @@ import { FirebaseApp } from "firebase/app";
 import BackendFirebase from "./backendFirebase";
 import { FirebaseWindow } from "@/helpers/customWindow";
 import { ApplicationVerifier } from "firebase/auth";
-
-export interface SignUpProps {
-  name: string;
-  email: string;
-  city: string;
-  phone: string;
-  birth: Dayjs;
-  appVerifier: ApplicationVerifier;
-}
+import SignUpProps from "@/components/signUpProps/signUpProps";
 
 class BackendAdapter {
     backend: BackendFirebase | null = null
