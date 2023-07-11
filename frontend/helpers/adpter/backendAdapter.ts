@@ -21,7 +21,7 @@ class BackendAdapter {
     signInWithPhone(args: SignUpProps, window: FirebaseWindow) {
       this.backend?.signInWithPhone(
         args,
-        { shouldRedirect: true, redirect: () => router.push("/verify") },
+        { shouldRedirect: true, redirect: () => useRouter().push("/verify") },
         window
       );
     }
@@ -29,7 +29,7 @@ class BackendAdapter {
     signInWithEmail(email: string, password: string) {
       this.backend?.signInWithEmail(email, password, {
         shouldRedirect: true,
-        redirect: () => router.push("/admin/campaignSelect"),
+        redirect: () => useRouter().push("/admin/campaignSelect"),
       });
     }
 
@@ -41,7 +41,7 @@ class BackendAdapter {
       this.backend?.signUp(
         email,
         password,
-        { shouldRedirect: true, redirect: () => router.push(path) },
+        { shouldRedirect: true, redirect: () => useRouter().push(path) },
         name
       );
     }
