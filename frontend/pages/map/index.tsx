@@ -47,7 +47,7 @@ class App extends Component {
  render() {
 return (
   
-    <div id="map"></div>
+    <div id="map" style={{height : 100 + '%'}}></div>
   
 );
 }
