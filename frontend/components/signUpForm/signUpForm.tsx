@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {
   TextField,
   FormControl,
@@ -11,24 +11,18 @@ import {
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { IMaskInput } from "react-imask";
 import { useRouter } from "next/router";
-import {
-  ApplicationVerifier,
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
 import { FirebaseWindow } from "@/helpers/customWindow";
-import styles from "./signUpStyles.module.css";
+import BackendAdapter from "@/helpers/adpter/backendAdapter";
 import { app } from "@/pages/_app";
 import dayjs, { Dayjs } from "dayjs";
+import { ApplicationVerifier } from "firebase/auth";
+import styles from "./signUpStyles.module.css";
+
+const adapter = new BackendAdapter("firebase", app);
 
 declare let window: FirebaseWindow;
 
-const auth = getAuth(app);
-auth.useDeviceLanguage();
-// auth.languageCode = 'it';
-// To apply the default browser preference instead of explicitly setting it.
-// firebase.auth().useDeviceLanguage();
+adapter.backend?.auth.useDeviceLanguage();
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -37,6 +31,7 @@ interface CustomProps {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function TextMaskCustom(props, ref: any) {
     const { onChange, ...other } = props;
     return (
@@ -58,7 +53,7 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
   }
 );
 
-interface SignUpProps {
+export interface SignUpProps {
   name: string;
   email: string;
   city: string;
@@ -79,27 +74,33 @@ export default function SignUpForm() {
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [appVerifier, setAppVerifier] = useState<any>();
   const router = useRouter();
 
   function ableToLogin(phone: string) {
-    if (name.length < 3) setNameError(true);
+    if (!name || name.length < 3 || name.length > 20) setNameError(true);
     if (!email.includes("@")) setEmailError(true);
-    if (!city || city.length < 3) setCityError(true)
+    if (!city || city.length < 3 || city.length > 45) setCityError(true);
     if (phone.length !== 14) setPhoneError(true);
     if (!birth?.isValid()) setBirthError(true);
     if (
       !birth?.isValid() ||
+      birth?.diff(dayjs(), "seconds") >= 0 ||
       !email.includes("@") ||
       !city ||
       city.length < 3 ||
+      city.length > 45 ||
+      !name ||
       name.length < 3 ||
-      phone.length !== 14
+      name.length > 20 ||
+      phone.length !== 14 // phone length considers the mask here
     ) {
-      setLoading(false);
+      console.log("login failed");
       return false;
     }
 
+    console.log("login successful");
     return true;
   }
 
@@ -109,31 +110,17 @@ export default function SignUpForm() {
 
     if (ableToLogin(phone) && birth)
       await signUp({ name, email, city, phone, birth, appVerifier });
-    else console.log("login failed");
 
     setLoading(false);
   }
 
   async function signUp(args: SignUpProps) {
     setLoading(true);
-    console.log("login successful");
-    await signInWithPhoneNumber(auth, args.phone, args.appVerifier)
-      .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult;
-        sessionStorage.setItem("name", args.name);
-        sessionStorage.setItem("email", args.email);
-        sessionStorage.setItem("city", args.city);
-        sessionStorage.setItem("phone", args.phone);
-        sessionStorage.setItem("birth", String(args.birth.unix()));
-        router.push("/verify");
-        return confirmationResult;
-      })
-      .catch((error) => {
-        // Error; SMS not sent
-        console.error(error);
-      });
+    await adapter.backend?.signInWithPhone(
+      args,
+      { shouldRedirect: true, redirect: () => router.push("/verify") },
+      window
+    );
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,20 +128,7 @@ export default function SignUpForm() {
   };
 
   React.useEffect(() => {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha",
-      {
-        size: "invisible",
-        callback: () => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          // handleSignUp()
-        },
-      },
-      auth
-    );
-    // recaptchaVerifier.render().then((widgetId: string) => {
-    //   window.recaptchaWidgetId = widgetId
-    // })
+    window.recaptchaVerifier = adapter.backend?.validation();
     setAppVerifier(window.recaptchaVerifier);
   }, []);
 
@@ -170,7 +144,7 @@ export default function SignUpForm() {
         required
         data-cy="name"
         error={nameError}
-        helperText={nameError ? "Nome deve ter mais de 3 caracteres" : null}
+        helperText={nameError ? "Nome deve ter entre 3 e 20 caracteres" : null}
         onChange={(ev) => {
           setName(ev.target.value);
           setNameError(false);
@@ -198,6 +172,9 @@ export default function SignUpForm() {
         value={city}
         data-cy="city"
         error={cityError}
+        helperText={
+          cityError ? "Cidade deve ter entre 3 e 45 caracteres" : null
+        }
         required
         onChange={(ev) => setCity(ev.target.value)}
       />
