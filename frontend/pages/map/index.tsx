@@ -45,17 +45,14 @@ class App extends Component {
  }
 
  render() {
-		return (
-			
-				<script async
-				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXtI7gKepIrTL5IvXt4HCJYJxGxDFCBs
-				&libraries=maps,marker&v=beta">
-				</script>
-				,<div id="map" ></div>
-				
-		);
-	}
-	
+return (
+  <table	>
+    <div id="map"></div>
+  </table>
+
+);
+}
+
 }
   
 export default App
