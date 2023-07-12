@@ -14,6 +14,7 @@ jobs:
           working-directory: frontend
           component: true
       - run: cd frontend/ &&  npm i -g firebase-tools@latest
+      - run: cd frontend/ &&  npm install -g @googlemaps/js-api-loader@latest
       - run: cd frontend/ && npm ci && npm run build
       - run: cd frontend/ && firebase experiments:enable webframeworks
       - run: cd frontend/ && firebase deploy --project mc426-6ac70 --token ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MC426_6AC70 }}
