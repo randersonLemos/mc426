@@ -46,10 +46,9 @@ class App extends Component {
 
  render() {
 return (
-  <table	>
+  
     <div id="map"></div>
-  </table>
-
+  
 );
 }
 
