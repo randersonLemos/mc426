@@ -18,40 +18,30 @@ const mapOptions = {
   zoom: 8
 };
 
-
-
-	
-
 class App extends Component {
- componentDidMount() {
-	   loader
-	  .importLibrary('maps')
-	  .then(({Map}) => {
-	    new Map(document.getElementById("map"), mapOptions);
-	  })
-	  .catch((e) => {
-	    // do something
-	  });
-	  
-	  loader
-	  .load()
-	  .then((google) => {
-	    new google.maps.Map(document.getElementById("map"), mapOptions);
-	  })
-	  .catch(e => {
-	    // do something
-	  });
-   
- }
+  componentDidMount() {
+    loader
+    .importLibrary('maps')
+    .then(({Map}) => {
+      new Map(document.getElementById("map"), mapOptions);
+    })
+    .catch((e) => {
+      // do something
+    });
+    loader
+    .load()
+    .then((google) => {
+      new google.maps.Map(document.getElementById("map"), mapOptions);
+    })
+    .catch(e => {
+      // do something
+    });   
+  }
 
- render() {
-return (
-  
-    <div id="map" style={{height : 100 + '%'}}></div>
-  
-);
+  render() {
+    return (
+      <div id="map" style={{height : 100 + '%'}}></div>
+    );
+  }
 }
-
-}
-  
 export default App
