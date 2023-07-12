@@ -12,10 +12,10 @@ const loader = new Loader({
 
 const mapOptions = {
   center: {
-    lat: 0,
-    lng: 0
+    lat: -22.901, 
+    lng: -47.054
   },
-  zoom: 4
+  zoom: 8
 };
 
 
