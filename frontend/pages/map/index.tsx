@@ -41,7 +41,7 @@ class App extends Component {
 	  .catch(e => {
 	    // do something
 	  });
-   return
+   
  }
 
  render() {
